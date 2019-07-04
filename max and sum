@@ -1,0 +1,31 @@
+If you want to sum(salary) group by member_ID and choose the max(sum(salary))
+do this(in TD):
+-----------------------------------
+select member_ID, total_salary
+from (
+  select member_ID, sum(salary) as total_salary, rank() over(order by sum(salary) desc) as rnk
+  from table.employee
+  group by member_ID
+)
+where rnk = 1
+-----------------------------------
+reference : https://www.sqlteam.com/forums/topic.asp?TOPIC_ID=120334
+
+i tried but failed:
+1.---------------------------------
+select member_ID, total_salary
+from (
+  select member_ID, sum(salary) as total_salary
+  from table.employee
+  group by member_ID
+)
+where total = max(total_salary)
+-----------------------------------
+2.---------------------------------
+select member_ID, max(total_salary)
+from (
+  select member_ID, sum(salary) as total_salary
+  from table.employee
+  group by member_ID
+)
+-----------------------------------
